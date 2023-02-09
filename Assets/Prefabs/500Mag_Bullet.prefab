@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1076643868696031078
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9015822969193700843}
+  - component: {fileID: 8854602147289500696}
+  - component: {fileID: 5230192441068837612}
+  m_Layer: 0
+  m_Name: 500Mag_Bullet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9015822969193700843
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076643868696031078}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &8854602147289500696
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076643868696031078}
+  serializedVersion: 2
+  m_Mass: 0.00002325581
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &5230192441068837612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076643868696031078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2fc3320891de3f4b93994b6eb3f8c2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletDamage: 90
+  impactForce: 1000
+  isPlayerBullet: 1
+  hitMarker: {fileID: 6697619363753193145, guid: 4408b425cd52fb84db39014329918b09, type: 3}
+  BloodEffect: {fileID: 0}
+  BulletHole: {fileID: 4193007631333144816, guid: ef538af01cd9b5946a5069bfdbbfdc11, type: 3}
+  ParticleEffect: {fileID: 4460953667865240604, guid: 1ecc1cd7cce78b041865045b8167562a, type: 3}
+  hitSFX: {fileID: 8300000, guid: 959cbc61c75806f43a16f48ece310b4b, type: 3}
