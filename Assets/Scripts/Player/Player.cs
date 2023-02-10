@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
 
     private float speed;
 
+    private float hidden = 1f;
+
     private int horzin;
     private int vertin;
     private int gunIndex = 0;
@@ -119,9 +121,9 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         // calls the move fuction to move the player
-        if (isGrounded) move.Move3DForce(speed, rb, transform.forward * vertin, transform.right * horzin);
+        if (isGrounded && stats.GetStamina() > 0f) move.Move3DForce(speed, rb, transform.forward * vertin, transform.right * horzin);
         // calls the jump function to make the player jump
-        if (isGrounded && jump) move.Jump3D(jumpForce, rb, transform.up);
+        if (isGrounded && jump && stats.GetStamina() > 0f) move.Jump3D(jumpForce, rb, transform.up);
     }
 
     private void Crouch(bool state)
@@ -163,5 +165,20 @@ public class Player : MonoBehaviour
 
     public Gun GetCurrentGun(){
         return currentGun;
+    }
+
+    public float GetHidden()
+    {
+        return hidden;
+    }
+
+    public void SetHidden(float val)
+    {
+        hidden = val;
+    }
+
+    public bool GetCrouch()
+    {
+        return crouch;
     }
 }

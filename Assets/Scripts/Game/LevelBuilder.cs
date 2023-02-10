@@ -5,7 +5,8 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class LevelBuilder : MonoBehaviour
 {
-    [SerializeField] private char[][] wallSpots;
+    // | vertical wall
+    // - horizontal wall
     [SerializeField] private float distBetweenWalls;
     private char[][] lastChararry;
     void Start()
@@ -16,7 +17,7 @@ public class LevelBuilder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (lastChararry != wallSpots)
+        /*if (lastChararry != wallSpots)
         {
             for (int i=0;i<wallSpots.Length;i++)
             {
@@ -25,6 +26,6 @@ public class LevelBuilder : MonoBehaviour
                     //wallSpots[i][j];
                 }
             }
-        }
+        }*/
     }
 }
