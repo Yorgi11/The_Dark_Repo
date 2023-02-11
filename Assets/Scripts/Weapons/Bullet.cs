@@ -54,7 +54,6 @@ public class Bullet : MonoBehaviour
     }
     private void SpawnBulletHole()
     {
-        Transform p = ray.collider.transform;
         GameObject hole = Instantiate(bulletHole, ray.point + ray.normal * 0.025f, Quaternion.LookRotation(ray.normal));
         //AudioSource.PlayClipAtPoint(hitSFX, transform.position);
         Destroy(hole, 5f);
