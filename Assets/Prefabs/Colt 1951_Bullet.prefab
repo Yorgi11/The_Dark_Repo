@@ -66,6 +66,6 @@ MonoBehaviour:
   isPlayerBullet: 1
   hitMarker: {fileID: 6697619363753193145, guid: 4408b425cd52fb84db39014329918b09, type: 3}
   BloodEffect: {fileID: 0}
-  BulletHole: {fileID: 4193007631333144816, guid: ef538af01cd9b5946a5069bfdbbfdc11, type: 3}
+  bulletHole: {fileID: 4193007631333144816, guid: ef538af01cd9b5946a5069bfdbbfdc11, type: 3}
   ParticleEffect: {fileID: 0}
   hitSFX: {fileID: 8300000, guid: 37020299fac8d984190c39f6d8089712, type: 3}
