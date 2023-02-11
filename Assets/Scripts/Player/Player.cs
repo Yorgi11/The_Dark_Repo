@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float walkSpeed;
     [SerializeField] private float sprintSpeed;
+    [SerializeField] private float noStaminaSpeed;
+    [SerializeField] private float minStamina;
     [SerializeField] private float crouchSpeed;
     [SerializeField] private float crouchRate;
     [SerializeField] private float jumpForce;
@@ -80,6 +82,7 @@ public class Player : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.LeftShift)) playerCam.SetSensitivity(playerCam.GetSensitivity());
         else speed = walkSpeed;
         if (crouch) speed = crouchSpeed;
+        if (stats.GetStamina() <= minStamina) speed = noStaminaSpeed;
 
         if (speed == sprintSpeed && (horzin != 0 || vertin != 0)) playerCam.ChangeFOV(sprintSpeed, sprintFOV);
         else playerCam.ChangeFOV(sprintSpeed, defaultFOV);
@@ -121,7 +124,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         // calls the move fuction to move the player
-        if (isGrounded && stats.GetStamina() > 0f) move.Move3DForce(speed, rb, transform.forward * vertin, transform.right * horzin);
+        if (isGrounded) move.Move3DForce(speed, rb, transform.forward * vertin, transform.right * horzin);
         // calls the jump function to make the player jump
         if (isGrounded && jump && stats.GetStamina() > 0f) move.Jump3D(jumpForce, rb, transform.up);
     }

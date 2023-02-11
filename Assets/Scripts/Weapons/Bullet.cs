@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private bool isPlayerBullet;
     [SerializeField] private GameObject hitMarker;
     [SerializeField] private GameObject BloodEffect;
-    [SerializeField] private GameObject BulletHole;
+    [SerializeField] private GameObject bulletHole;
     [SerializeField] private GameObject ParticleEffect;
     [SerializeField] private AudioClip hitSFX;
 
@@ -46,15 +46,16 @@ public class Bullet : MonoBehaviour
             }
             if (ray.collider.gameObject.GetComponentInParent<BreakableObject>() != null) ray.collider.gameObject.GetComponentInParent<BreakableObject>().AddHit();
             if (ray.collider.gameObject.GetComponentInParent<StatsSystem>() != null && !isPlayerBullet) ray.collider.gameObject.GetComponentInParent<StatsSystem>().TakeDamage(bulletDamage);
-            if (ray.transform.CompareTag("LevelPart")) SpawnBulletHole(ray.collider.transform);
+            if (ray.transform.CompareTag("LevelPart")) SpawnBulletHole();
             if (ray.collider.GetComponent<Rigidbody>() != null) ray.collider.GetComponent<Rigidbody>().AddForceAtPosition(dir.normalized * impactForce, ray.point);
             Destroy(gameObject);
         }
         lastPos = transform.position;
     }
-    private void SpawnBulletHole(Transform t)
+    private void SpawnBulletHole()
     {
-        GameObject hole = Instantiate(BulletHole, ray.point + ray.normal * 0.025f, Quaternion.LookRotation(ray.normal), t);
+        Transform p = ray.collider.transform;
+        GameObject hole = Instantiate(bulletHole, ray.point + ray.normal * 0.025f, Quaternion.LookRotation(ray.normal));
         //AudioSource.PlayClipAtPoint(hitSFX, transform.position);
         Destroy(hole, 5f);
     }
