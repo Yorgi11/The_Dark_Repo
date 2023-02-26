@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Grey
-  m_Shader: {fileID: 4800000, guid: 95ded8e1538ac0c40bc397868efed202, type: 3}
+  m_Shader: {fileID: 4800000, guid: 08bd9563882a33f4589725d00b6a4cb7, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4

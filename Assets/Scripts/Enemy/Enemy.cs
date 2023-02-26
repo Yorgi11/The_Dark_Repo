@@ -47,4 +47,8 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("died");
     }
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<StatsSystem>() != null) collision.gameObject.GetComponent<StatsSystem>().TakeDamage(25f * Time.deltaTime);
+    }
 }

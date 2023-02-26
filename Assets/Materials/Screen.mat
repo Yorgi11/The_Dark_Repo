@@ -8,10 +8,10 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Screen
-  m_Shader: {fileID: 4800000, guid: 95ded8e1538ac0c40bc397868efed202, type: 3}
-  m_ValidKeywords: []
-  m_InvalidKeywords:
+  m_Shader: {fileID: 4800000, guid: 08bd9563882a33f4589725d00b6a4cb7, type: 3}
+  m_ValidKeywords:
   - _EMISSION
+  m_InvalidKeywords: []
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
