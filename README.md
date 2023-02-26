@@ -39,4 +39,4 @@ Bloom: There are two main bloom effects one on the overhead lights to give the i
 Known Issues: Since adding shadows unity has broken and every build even those with shadows removed opens with a black screen on the main game scene
 
 Video Reoprt:
-Presentation: 
+Presentation: https://docs.google.com/presentation/d/1fISQ-rJypNm8CEsS6Y9XYnj23unxz7zCNwczh_2-a7M/edit?usp=sharing
