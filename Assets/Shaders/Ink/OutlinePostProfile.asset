@@ -30,7 +30,7 @@ MonoBehaviour:
     value: 0.5
   depthNormalThresholdScale:
     overrideState: 1
-    value: 7
+    value: 9
   normalThreshold:
     overrideState: 1
     value: 0.4
