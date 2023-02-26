@@ -36,5 +36,7 @@ Visual effects: I have implemented two particles sytems, one for the gun sparks,
 Postprocessing Effects: I have implemented Bloom as well as a screen space outline effect.
 Bloom: There are two main bloom effects one on the overhead lights to give the illusion they are being used to illuminate the scene, and one on the muzzle of the guns to add a glowing effect durring consecutive firing.
 
+Known Issues: Since adding shadows unity has broken and every build even those with shadows removed opens with a black screen on the main game scene
+
 Video Reoprt:
 Presentation: 
