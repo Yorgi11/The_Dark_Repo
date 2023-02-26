@@ -12,10 +12,10 @@ public class CustomText : MonoBehaviour
     [SerializeField] private float scale = 1f;
 
     private string lastT = "";
+    private float lastSpacing = 0f;
+    private float lastScale = 0f;
 
     private float currentSpace = 0f;
-
-    private GameObject currentC;
 
     private char[] text_;
     private char[] ascii;
@@ -27,30 +27,36 @@ public class CustomText : MonoBehaviour
     }
     private void Update()
     {
-        if (!t.Equals(lastT))
+        ascii = asciiText.ToLower().ToCharArray();
+        t = t.ToLower();
+        text_ = t.ToCharArray();
+        if (!t.Equals(lastT) || spacing != lastSpacing || scale != lastScale)
         {
             lastT = t;
-            currentSpace = 0f;
-            ascii = asciiText.ToLower().ToCharArray();
-            t = t.ToLower();
-            text_ = t.ToCharArray();
-            for (int i = this.transform.childCount; i > 0; --i) DestroyImmediate(this.transform.GetChild(0).gameObject);
+            lastSpacing = spacing;
+            lastScale = scale;
+            for (int i=0;i< GetComponentsInChildren<Transform>().Length; i++)
+            {
+                GameObject.DestroyImmediate(GetComponentsInChildren<Transform>()[0].gameObject);
+            }
+            // loop through each desired character
             for (int i = 0; i < text_.Length; i++)
             {
                 if (text_[i] != ' ')
                 {
+                    // loop through all the available ascii characters and find the coresponding indexes
                     for (int j = 0; j < ascii.Length; j++)
                     {
-                        if (ascii[j] == text_[i])
+                        GameObject temp;
+                        if (text_[i] == ascii[j])
                         {
-                            currentC = c[j];
-                            break;
+                            temp = Instantiate(c[j], transform.position + new Vector3(currentSpace, 0f, 0f), Quaternion.identity, transform);
+                            temp.transform.localScale = Vector3.one * scale;
+                            currentSpace += spacing;
                         }
                     }
-                    GameObject temp = Instantiate(currentC, transform.position + new Vector3(currentSpace, 0f, 0f), Quaternion.identity, this.gameObject.transform);
-                    temp.transform.localScale = Vector3.one * scale;
-                    currentSpace += spacing + (scale * 0.1f * spacing);
-                }else currentSpace += spacing + (scale * 0.1f * spacing);
+                }
+                else currentSpace += spacing;
             }
         }
     }

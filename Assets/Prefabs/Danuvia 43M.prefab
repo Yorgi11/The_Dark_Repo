@@ -728,8 +728,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2294730926297972207}
-  - component: {fileID: 2294730926297972205}
-  - component: {fileID: 2294730926297972204}
   m_Layer: 9
   m_Name: Danuvia 43M
   m_TagString: Untagged
@@ -754,65 +752,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2294730926297972205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2294730926297972206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a7367437ab4ee84a94d240ee75d1dee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletForce: 650
-  shootDelay: 400
-  reloadDelay: 1.75
-  snapiness: 12
-  adsSpeed: 20
-  idleSwaySpeed: 0.5
-  lookSwaySpeed: 1
-  idlex: 0.000125
-  idley: 0.000125
-  smooth: 4
-  concentraion: 0.8
-  maxAmmo: 20
-  recoilx: 10
-  recoily: 5
-  recoilz: 2.5
-  recoilSlide: 0
-  aimRecoilx: 5
-  aimRecoily: 2.5
-  aimRecoilz: 1.25
-  aimRecoilSlide: 0
-  hasScope: 0
-  scopeFOV: 0
-  camRecoilMultiplier: {x: 0.35, y: 0.35}
-  aimPos: {x: 0, y: 0, z: 0}
-  aimRot: {x: 0, y: 0, z: 0}
-  hipPos: {x: 0.5, y: -0.25, z: 0.75}
-  hipRot: {x: -3.54, y: -4.77, z: 0}
-  bulletSpawn: {fileID: 2294730926896606394}
-  bullet: {fileID: 7377201195950329875, guid: 0a99d8e69cf01314891e50acde3bad08, type: 3}
-  fireMode: 2
-  burstNum: 0
---- !u!114 &2294730926297972204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2294730926297972206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bbd2399170f15e448d8419598b6963f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Model: {fileID: 2294730926509996791}
-  MagModel: {fileID: 4962702692590846451}
-  FullModel: {fileID: 1752530154468002654}
-  SwayTarget: {fileID: 2294730926768730164}
 --- !u!1 &2294730926509996790
 GameObject:
   m_ObjectHideFlags: 0

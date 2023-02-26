@@ -8,13 +8,14 @@ public class Scenes : MonoBehaviour
 {
     [SerializeField] private GameObject PauseMenu;
     [SerializeField] private GameObject OptionsMenu;
+    [SerializeField] private GameObject DeathMenu;
     [SerializeField] private Slider SensitivitySlider;
     [SerializeField] private Text SensitivityText;
 
     private PlayerCam cam;
     private void Start()
     {
-        cam = FindObjectOfType<PlayerCam>();
+        /*cam = FindObjectOfType<PlayerCam>();
         if (SensitivitySlider != null && SensitivityText != null)
         {
             SensitivitySlider.onValueChanged.AddListener((v) =>
@@ -22,7 +23,7 @@ public class Scenes : MonoBehaviour
                 cam.SetSensitivity(v);
                 SensitivityText.text = v.ToString();
             });
-        }
+        }*/
     }
 
     private void Update()
@@ -34,6 +35,7 @@ public class Scenes : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }*/
+        if (SceneManager.GetActiveScene().buildIndex == 2) DeathMenu.SetActive(true);
     }
     public void PlayButton()
     {

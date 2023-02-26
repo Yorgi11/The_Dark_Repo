@@ -4,64 +4,75 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float bulletDamage;
-    [SerializeField] private float impactForce;
-    [SerializeField] private bool isPlayerBullet;
     [SerializeField] private GameObject hitMarker;
-    [SerializeField] private GameObject BloodEffect;
     [SerializeField] private GameObject bulletHole;
-    [SerializeField] private GameObject ParticleEffect;
-    [SerializeField] private AudioClip hitSFX;
+    [SerializeField] private GameObject point;
+    private float damage;
+    private float headshot;
+    private float range;
+    private float impactForce;
 
+    private Vector3 lastpos;
     private Vector3 dir;
 
-    private Vector3 lastPos;
-
-    private Rigidbody bulletRb;
+    private Transform HitParent;
 
     private RaycastHit ray;
     void Awake()
     {
-        bulletRb = GetComponent<Rigidbody>();
-        Destroy(gameObject, 3f);
-        lastPos = transform.position;
+        lastpos = transform.position;
     }
+
+    // Update is called once per frame
     void Update()
     {
-        dir = transform.position - lastPos;
-        if (Physics.Raycast(lastPos, dir.normalized, out ray, dir.magnitude))
+        if (damage !=0 && headshot != 0 && range != 0 && impactForce != 0)
         {
-            /*if (ray.collider.gameObject.GetComponentInParent<Enemy>() != null && isPlayerBullet)
+            dir = transform.position - lastpos;
+            if (Physics.Raycast(lastpos, dir.normalized, out ray, dir.magnitude))
             {
-                ray.collider.gameObject.GetComponentInParent<Enemy>().TakeDamage(bulletDamage);
-                //Instantiate(BloodEffect, ray.point, Quaternion.LookRotation(ray.normal));
-                SpawnHitmarker();
-            }*/
-            if (ray.collider.gameObject.GetComponent<DamagableObject>() != null && isPlayerBullet)
-            {
-                ray.collider.gameObject.GetComponent<DamagableObject>().DoDamage(bulletDamage);
-                //Instantiate(BloodEffect, ray.point, Quaternion.LookRotation(ray.normal));
-                //Instantiate(ParticleEffect, ray.point, Quaternion.LookRotation(ray.normal));
-                SpawnHitmarker();
+                if (ray.collider.GetComponentInParent<Enemy>() != null)
+                {
+                    ray.collider.GetComponentInParent<Enemy>().TakeDamage(damage);
+                    SpawnHitmarker();
+                }
+                if (ray.collider.CompareTag("LevelPart")) SpawnBulletHole();
+                if (ray.collider.GetComponent<Rigidbody>() != null) ray.collider.GetComponent<Rigidbody>().AddForceAtPosition(impactForce * -ray.normal, ray.point, ForceMode.Impulse);
+                Destroy(gameObject);
             }
-            if (ray.collider.gameObject.GetComponentInParent<BreakableObject>() != null) ray.collider.gameObject.GetComponentInParent<BreakableObject>().AddHit();
-            if (ray.collider.gameObject.GetComponentInParent<StatsSystem>() != null && !isPlayerBullet) ray.collider.gameObject.GetComponentInParent<StatsSystem>().TakeDamage(bulletDamage);
-            if (ray.transform.CompareTag("LevelPart")) SpawnBulletHole();
-            if (ray.collider.GetComponent<Rigidbody>() != null) ray.collider.GetComponent<Rigidbody>().AddForceAtPosition(dir.normalized * impactForce, ray.point);
-            Destroy(gameObject);
+            lastpos = transform.position;
         }
-        lastPos = transform.position;
-    }
-    private void SpawnBulletHole()
-    {
-        GameObject hole = Instantiate(bulletHole, ray.point + ray.normal * 0.025f, Quaternion.LookRotation(ray.normal));
-        //AudioSource.PlayClipAtPoint(hitSFX, transform.position);
-        Destroy(hole, 5f);
     }
     private void SpawnHitmarker()
     {
-        Transform temp = GameObject.FindGameObjectWithTag("HitMarker").transform;
-        GameObject marker = GameObject.Instantiate(hitMarker, Camera.main.WorldToScreenPoint(transform.position), Quaternion.identity, temp);
+        HitParent = GameObject.FindGameObjectWithTag("HitMarker").transform;
+        GameObject marker = GameObject.Instantiate(hitMarker, Camera.main.WorldToScreenPoint(transform.position), Quaternion.identity, HitParent);
         Destroy(marker, 0.125f);
+    }
+
+    private void SpawnBulletHole()
+    {
+        GameObject pos = Instantiate(point, ray.point + ray.normal * 0.025f, Quaternion.LookRotation(-ray.normal), ray.collider.gameObject.transform);
+        GameObject hole = Instantiate(bulletHole, pos.transform.position, Quaternion.LookRotation(-ray.normal));
+        hole.GetComponent<BulletHole>().SetPos(pos.transform);
+        Destroy(hole, 5f);
+        Destroy(pos, 5.1f);
+    }
+
+    public void SetDamage(float d)
+    {
+        damage = d;
+    }
+    public void SetHeadShot(float h)
+    {
+        headshot = h;
+    }
+    public void SetRange(float r)
+    {
+        range = r;
+    }
+    public void SetImpactForce(float f)
+    {
+        impactForce = f;
     }
 }

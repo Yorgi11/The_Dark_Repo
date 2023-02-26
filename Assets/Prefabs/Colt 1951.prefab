@@ -111,8 +111,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 667818414231672958}
-  - component: {fileID: 667818414231672959}
-  - component: {fileID: 667818414231672944}
   m_Layer: 9
   m_Name: Colt 1951
   m_TagString: Untagged
@@ -137,65 +135,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &667818414231672959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 667818414231672957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a7367437ab4ee84a94d240ee75d1dee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletForce: 775
-  shootDelay: 180
-  reloadDelay: 2
-  snapiness: 12
-  adsSpeed: 60
-  idleSwaySpeed: 0.5
-  lookSwaySpeed: 1
-  idlex: 0.00025
-  idley: 0.00025
-  smooth: 4
-  concentraion: 0.5
-  maxAmmo: 6
-  recoilx: 36
-  recoily: 18
-  recoilz: 13.5
-  recoilSlide: 0
-  aimRecoilx: 18
-  aimRecoily: 9
-  aimRecoilz: 4.5
-  aimRecoilSlide: 0
-  hasScope: 0
-  scopeFOV: 0
-  camRecoilMultiplier: {x: 0.25, y: 0.25}
-  aimPos: {x: 0, y: 0, z: 0}
-  aimRot: {x: 0, y: 0, z: 0}
-  hipPos: {x: 0.64, y: -0.24, z: 0.81}
-  hipRot: {x: -6.1, y: -6.076, z: 0.648}
-  bulletSpawn: {fileID: 667818413390589181}
-  bullet: {fileID: 13107678579077619, guid: 633ea004ee6cee948be2260f70489009, type: 3}
-  fireMode: 1
-  burstNum: 0
---- !u!114 &667818414231672944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 667818414231672957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bbd2399170f15e448d8419598b6963f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Model: {fileID: 667818414935707450}
-  MagModel: {fileID: 0}
-  FullModel: {fileID: 0}
-  SwayTarget: {fileID: 667818414268573466}
 --- !u!1 &667818414268573465
 GameObject:
   m_ObjectHideFlags: 0

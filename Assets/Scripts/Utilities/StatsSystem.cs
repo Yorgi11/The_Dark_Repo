@@ -21,11 +21,8 @@ public class StatsSystem : MonoBehaviour
 
     private bool canHeal = true;
     private bool canRecover = true;
-
-    private Scenes scene;
     void Start()
     {
-        scene = FindObjectOfType<Scenes>();
         currentHp = maxHp;
         currentHunger = maxHunger;
         currentStamina = maxStamina;
@@ -63,7 +60,8 @@ public class StatsSystem : MonoBehaviour
         if (currentHp - dmg <= 0)
         {
             currentHp = 0;
-            Die();
+            if (GetComponent<Player>() != null) GetComponent<Player>().Die();
+            //else GetComponent<Enemy>().Die();
         }
         else currentHp -= dmg;
         canHeal = false;
@@ -74,13 +72,6 @@ public class StatsSystem : MonoBehaviour
     {
         if (currentHp + healAmount > maxHp) currentHp = maxHp;
         else currentHp += healAmount * Time.deltaTime;
-    }
-
-    private void Die()
-    {
-        Debug.Log(gameObject.name + "Died");
-        //scene.LoadDeathScene();
-        //Destroy(gameObject);
     }
 
     IEnumerator DelayHealing(float time)
