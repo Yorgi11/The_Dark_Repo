@@ -67,6 +67,8 @@ MonoBehaviour:
   speed: 40
   maxrange: 10
   mindist: 1.25
+  sightLine: 5
+  player: {fileID: 0}
 --- !u!1 &4866185055790684364
 GameObject:
   m_ObjectHideFlags: 0
