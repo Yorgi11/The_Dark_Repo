@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Gun : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private float FireRate = 0f;
     [SerializeField] private float muzzleVel = 0f;
     [SerializeField] private float impactForce = 0f;
+    [SerializeField] private float reloadDelay = 0.5f;
     [Header("Recoil")]
     [SerializeField] private float Recoil = 0f;
     [SerializeField] private float camFactor = 0f;
@@ -56,8 +58,11 @@ public class Gun : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject AmmoField;
     [SerializeField] private GameObject bulletImage;
+    [SerializeField] private Text AmmoText;
 
     private GameObject[] bulletImages;
+
+    private string ammo = "";
 
     private int currentAmmo;
     private int shotGroupIndex = 0;
@@ -65,6 +70,7 @@ public class Gun : MonoBehaviour
     private int currentShots = 0;
 
     private bool canShoot = true;
+    private bool isReloading = false;
 
     private GunAnimation ani;
     private MuzzleGlow mg;
@@ -74,6 +80,7 @@ public class Gun : MonoBehaviour
         mg = GetComponent<MuzzleGlow>();
         FireRate = 1 / FireRate;
         currentAmmo = maxAmmo;
+        SetAmmo();
         bulletImages = new GameObject[maxAmmo];
     }
     void Update()
@@ -91,6 +98,11 @@ public class Gun : MonoBehaviour
         ani.Recoil(0f, 0f, 0f, 0f, snappiness, camFactor);
         if (Input.GetKey(KeyCode.Mouse1)) ani.ADS(aimPos, aimRot, adsSpeed);
         else ani.ADS(hipPos, hipRot, adsSpeed);
+
+        if (Input.GetKeyDown(KeyCode.R) && !isReloading) StartCoroutine(Reload());
+        if (currentAmmo <= 0 && Input.GetKey(KeyCode.Mouse0) && !isReloading) StartCoroutine(Reload());
+
+        if (AmmoText != null) AmmoText.text = ammo;
     }
 
     private void Shoot()
@@ -104,6 +116,7 @@ public class Gun : MonoBehaviour
         b.GetComponent<Rigidbody>().velocity = BarrelTip.transform.forward * muzzleVel;
         currentShots++;
         currentAmmo--;
+        SetAmmo();
         mg.SetNumShots(currentShots);
         ParticleSystem p = Instantiate(particles.gameObject, particleSpawn.transform.position, Quaternion.LookRotation(particleSpawn.transform.forward)).GetComponent<ParticleSystem>();
         ParticleSystem p2 = Instantiate(smoke.gameObject, particleSpawn.transform.position, Quaternion.LookRotation(particleSpawn.transform.forward)).GetComponent<ParticleSystem>();
@@ -116,48 +129,24 @@ public class Gun : MonoBehaviour
         // Advanced Recoil System
         if (auto && usingAdvanceRecoilSystem)
         {
-            float x, y, z;
-            /*if (currentShots <= 3)
-            {
-                x = recx * 0.45f;
-                y = recy * 0.45f;
-                z = recz * 0.45f;
-            }           // 45%
-            else if (currentShots <= 6)
-            {
-                x = recx * 0.6f;
-                y = recy * 0.6f;
-                z = recz * 0.6f;
-            }      // 60%
-            else if (currentShots <= 12)
-            {
-                x = recx * 0.75f;
-                y = recy * 0.75f;
-                z = recz * 0.75f;
-            }     // 75%
-            else
-            {
-                x = recx;
-                y = recy;
-                z = recz;
-            }*/
+            float x = recx;
+            float y = recy;
+            float z = recz;
             if (currentShots <= shotsPerGroup[shotGroupIndex])
             {
                 x = recx * recMultiPerGroup[shotGroupIndex];
                 y = recy * recMultiPerGroup[shotGroupIndex];
                 z = recz * recMultiPerGroup[shotGroupIndex];
             }
-            else if (shotGroupIndex < shotsPerGroup.Length - 1)
+            if (shotGroupIndex < shotsPerGroup.Length - 1)
             {
                 shotGroupIndex++;
             }
             else
             {
-                x = recx;
-                y = recy;
-                z = recz;
+                shotGroupIndex = shotsPerGroup.Length - 1;
             }
-            //ani.Recoil(x, y, z, recs, snappiness, camFactor);
+            ani.Recoil(x, y, z, recs, snappiness, camFactor);
         }
         else
         {
@@ -181,5 +170,23 @@ public class Gun : MonoBehaviour
         canShoot = false;
         yield return new WaitForSeconds(FireRate);
         canShoot = true;
+    }
+
+    private IEnumerator Reload()
+    {
+        isReloading = true;
+        yield return new WaitForSeconds(reloadDelay);
+        currentAmmo = maxAmmo;
+        isReloading = false;
+        SetAmmo();
+    }
+
+    private void SetAmmo()
+    {
+        ammo = "";
+        for (int i = 0; i < currentAmmo; i++)
+        {
+            ammo += "|";
+        }
     }
 }

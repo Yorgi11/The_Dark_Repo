@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour
         speed = walkForce;
         maxSpeed = speed * 1.5f;
         if (RunForce < walkForce * 1.5f) RunForce = walkForce * 2f;
+        currentHp = maxHp;
     }
     private void Update()
     {
@@ -48,7 +49,6 @@ public class Enemy : MonoBehaviour
         // casts a ray from the enemy to the player
         if (Physics.Raycast(transform.position, (player.transform.position - transform.position).normalized, out ray, DetectLayers))
         {
-            Debug.Log("Sees: " + ray.collider.name);
             // if the ray hits the player set the target to the players position
             // if not set the target to a random position around the enemy's current position
             if (ray.collider.GetComponentInParent<Player>() != null) Target = player.transform.position;
@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
         dir = (Target - transform.position).normalized;
         distToTarget = Vector3.Distance(transform.position, Target);
         transform.forward = dir;
-        SeekHandler();
+        //SeekHandler();
     }
     private void FixedUpdate()
     {
@@ -95,7 +95,7 @@ public class Enemy : MonoBehaviour
     }
     private void Die()
     {
-        Debug.Log("died");
+        Destroy(gameObject);
     }
     private void OnCollisionStay(Collision collision)
     {

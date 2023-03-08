@@ -26,7 +26,7 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (damage !=0 && headshot != 0 && range != 0 && impactForce != 0)
+        if (damage != 0 && headshot != 0 && range != 0 && impactForce != 0)
         {
             dir = transform.position - lastpos;
             if (Physics.Raycast(lastpos, dir.normalized, out ray, dir.magnitude))

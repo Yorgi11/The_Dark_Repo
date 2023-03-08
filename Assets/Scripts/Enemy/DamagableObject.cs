@@ -12,6 +12,5 @@ public class DamagableObject : MonoBehaviour
     {
         if (enemy) GetComponentInParent<Enemy>().TakeDamage((head ? h : damage * bulletDamageMultiplier));
         else GetComponent<StatsSystem>().TakeDamage(damage * bulletDamageMultiplier);
-        Debug.Log(this.gameObject.name + " shot");
     }
 }
