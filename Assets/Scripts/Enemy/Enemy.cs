@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float RunForce;
     [SerializeField] private float minRandMove;
     [SerializeField] private float maxRandMove;
+    [SerializeField] private float obstDist;
+    [SerializeField] private Vector3[] obstacleCheckDirs;
     [Header("Seek Level Ranges")]
     [SerializeField] private float S1Range;
     [SerializeField] private float S2Range;
@@ -22,11 +24,13 @@ public class Enemy : MonoBehaviour
     private float maxSpeed;
 
     private RaycastHit ray;
+    private RaycastHit obstRay;
 
     private Rigidbody rb;
 
     private Vector3 Target;
     private Vector3 dir;
+    private Vector3 avoidForce;
 
     private Player player;
 
@@ -47,7 +51,7 @@ public class Enemy : MonoBehaviour
         if (rb.velocity.magnitude > maxSpeed) rb.velocity = 1.5f * speed * rb.velocity.normalized;
 
         // casts a ray from the enemy to the player
-        if (Physics.Raycast(transform.position, (player.transform.position - transform.position).normalized, out ray, DetectLayers))
+        if (Physics.Raycast(transform.position, (player.transform.position - transform.position).normalized, out ray))
         {
             // if the ray hits the player set the target to the players position
             // if not set the target to a random position around the enemy's current position
@@ -62,6 +66,9 @@ public class Enemy : MonoBehaviour
     private void FixedUpdate()
     {
         // move the enemy to the targets position
+        avoidForce = Vector3.zero;
+        ObstaclesCheck();
+        rb.AddForce(avoidForce * speed * 10f);
         rb.AddForce(10f * speed * dir);
     }
     private void SeekHandler()
@@ -82,6 +89,16 @@ public class Enemy : MonoBehaviour
         else if (distToTarget <= S4Range)
         {
             speed = RunForce;
+        }
+    }
+    private void ObstaclesCheck()
+    {
+        for (int i=0; i<obstacleCheckDirs.Length;i++)
+        {
+            if (Physics.Raycast(transform.position, obstacleCheckDirs[i], out obstRay, obstDist))
+            {
+                avoidForce += -obstacleCheckDirs[i] * Vector3.Distance(transform.position, ray.collider.transform.position);
+            }
         }
     }
     public void TakeDamage(float d)

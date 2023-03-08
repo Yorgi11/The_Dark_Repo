@@ -68087,6 +68087,16 @@ MonoBehaviour:
   RunForce: 11
   minRandMove: 10
   maxRandMove: 10
+  obstDist: 5
+  obstacleCheckDirs:
+  - {x: 1, y: 0, z: 0}
+  - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: -1}
+  - {x: 0.7071, y: 0, z: 0.7071}
+  - {x: -0.7071, y: 0, z: 0.7071}
+  - {x: 0.7071, y: 0, z: -0.7071}
+  - {x: -0.7071, y: 0, z: -0.7071}
   S1Range: 40
   S2Range: 20
   S3Range: 10
