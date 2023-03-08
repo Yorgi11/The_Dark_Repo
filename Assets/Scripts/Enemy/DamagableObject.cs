@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class DamagableObject : MonoBehaviour
 {
-    [SerializeField] private float bulletDamageMultiplier;
+    [SerializeField] private float bulletDamageMultiplier = 1f;
     [SerializeField] bool enemy;
+    [SerializeField] bool head;
 
-    public void DoDamage(float damage)
+    public void DoDamage(float damage, float h)
     {
-        if (enemy) GetComponentInParent<Enemy>().TakeDamage(damage * bulletDamageMultiplier);
+        if (enemy) GetComponentInParent<Enemy>().TakeDamage((head ? h : damage * bulletDamageMultiplier));
         else GetComponent<StatsSystem>().TakeDamage(damage * bulletDamageMultiplier);
         Debug.Log(this.gameObject.name + " shot");
     }

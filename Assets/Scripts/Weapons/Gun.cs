@@ -5,6 +5,7 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
     [SerializeField] private bool auto;
+    [SerializeField] private bool usingAdvanceRecoilSystem;
     [SerializeField] private float Damage = 0f;
     [SerializeField] private float HeadShot = 0f;
     [SerializeField] private float FireRate = 0f;
@@ -17,6 +18,10 @@ public class Gun : MonoBehaviour
     [SerializeField] private float recy = 0f;
     [SerializeField] private float recz = 0f;
     [SerializeField] private float recs = 0f;
+    [Space]
+    [Header("Advanced Recoil")]
+    [SerializeField] private int[] shotsPerGroup;
+    [SerializeField] private float[] recMultiPerGroup;
     [Space]
     [SerializeField] private float Mobility = 0f;
     [Header("Handling")]
@@ -32,6 +37,8 @@ public class Gun : MonoBehaviour
     [SerializeField] private float concentartion = 0f;
     [SerializeField] private float swaySmooth = 0f;
     [SerializeField] private float swayMulti = 0f;
+    [Header("Drag-Ins")]
+    [SerializeField] private int maxAmmo = 1;
     [Header("Pos/Rot")]
     [SerializeField] private Vector3 aimPos;
     [SerializeField] private Vector3 aimRot;
@@ -46,6 +53,14 @@ public class Gun : MonoBehaviour
     [SerializeField] private ParticleSystem smoke;
     [SerializeField] private AudioSource source;
     [SerializeField] private AudioClip shootSFX;
+    [Header("UI")]
+    [SerializeField] private GameObject AmmoField;
+    [SerializeField] private GameObject bulletImage;
+
+    private GameObject[] bulletImages;
+
+    private int currentAmmo;
+    private int shotGroupIndex = 0;
 
     private int currentShots = 0;
 
@@ -58,11 +73,13 @@ public class Gun : MonoBehaviour
         ani = GetComponent<GunAnimation>();
         mg = GetComponent<MuzzleGlow>();
         FireRate = 1 / FireRate;
+        currentAmmo = maxAmmo;
+        bulletImages = new GameObject[maxAmmo];
     }
     void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse0) && canShoot && auto) Shoot();
-        else if (Input.GetKeyDown(KeyCode.Mouse0) && canShoot && !auto) Shoot();
+        if (Input.GetKey(KeyCode.Mouse0) && canShoot && auto && currentAmmo > 0) Shoot();
+        else if (Input.GetKeyDown(KeyCode.Mouse0) && canShoot && !auto && currentAmmo > 0) Shoot();
         else if (!Input.GetKey(KeyCode.Mouse0))
         {
             currentShots = 0;
@@ -86,6 +103,7 @@ public class Gun : MonoBehaviour
         //b.GetComponent<Rigidbody>().AddForce(cam.transform.forward * Range, ForceMode.Impulse);
         b.GetComponent<Rigidbody>().velocity = BarrelTip.transform.forward * muzzleVel;
         currentShots++;
+        currentAmmo--;
         mg.SetNumShots(currentShots);
         ParticleSystem p = Instantiate(particles.gameObject, particleSpawn.transform.position, Quaternion.LookRotation(particleSpawn.transform.forward)).GetComponent<ParticleSystem>();
         ParticleSystem p2 = Instantiate(smoke.gameObject, particleSpawn.transform.position, Quaternion.LookRotation(particleSpawn.transform.forward)).GetComponent<ParticleSystem>();
@@ -94,10 +112,12 @@ public class Gun : MonoBehaviour
         p2.Play();
         Destroy(p.gameObject, 0.06f);
         Destroy(p2.gameObject, 0.06f);
-        if (auto)
+
+        // Advanced Recoil System
+        if (auto && usingAdvanceRecoilSystem)
         {
             float x, y, z;
-            if (currentShots <= 3)
+            /*if (currentShots <= 3)
             {
                 x = recx * 0.45f;
                 y = recy * 0.45f;
@@ -120,8 +140,24 @@ public class Gun : MonoBehaviour
                 x = recx;
                 y = recy;
                 z = recz;
+            }*/
+            if (currentShots <= shotsPerGroup[shotGroupIndex])
+            {
+                x = recx * recMultiPerGroup[shotGroupIndex];
+                y = recy * recMultiPerGroup[shotGroupIndex];
+                z = recz * recMultiPerGroup[shotGroupIndex];
             }
-            ani.Recoil(x, y, z, recs, snappiness, camFactor);
+            else if (shotGroupIndex < shotsPerGroup.Length - 1)
+            {
+                shotGroupIndex++;
+            }
+            else
+            {
+                x = recx;
+                y = recy;
+                z = recz;
+            }
+            //ani.Recoil(x, y, z, recs, snappiness, camFactor);
         }
         else
         {

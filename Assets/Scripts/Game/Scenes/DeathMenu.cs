@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class DeathMenu : MonoBehaviour
 {
-    public void PlayButton()
+    public void RespawnButton()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

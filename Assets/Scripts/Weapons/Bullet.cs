@@ -31,13 +31,16 @@ public class Bullet : MonoBehaviour
             dir = transform.position - lastpos;
             if (Physics.Raycast(lastpos, dir.normalized, out ray, dir.magnitude))
             {
-                if (ray.collider.GetComponentInParent<Enemy>() != null)
+                if (ray.collider.GetComponent<DamagableObject>() != null)
                 {
-                    ray.collider.GetComponentInParent<Enemy>().TakeDamage(damage);
-                    SpawnHitmarker();
+                    ray.collider.GetComponent<DamagableObject>().DoDamage(damage, headshot);
+                    if (ray.collider.GetComponentInParent<Enemy>() != null) SpawnHitmarker();
                 }
                 if (ray.collider.CompareTag("LevelPart")) SpawnBulletHole();
-                if (ray.collider.GetComponent<Rigidbody>() != null) ray.collider.GetComponent<Rigidbody>().AddForceAtPosition(impactForce * -ray.normal, ray.point, ForceMode.Impulse);
+                Rigidbody rb = null;
+                if (ray.collider.GetComponent<Rigidbody>() != null) rb = ray.collider.GetComponent<Rigidbody>();
+                if (ray.collider.GetComponentInParent<Rigidbody>() != null) rb = ray.collider.GetComponentInParent<Rigidbody>();
+                if (rb != null) rb.AddForceAtPosition(impactForce * dir.normalized, ray.point, ForceMode.Impulse);
                 Destroy(gameObject);
             }
             lastpos = transform.position;

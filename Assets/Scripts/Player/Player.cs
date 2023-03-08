@@ -40,9 +40,9 @@ public class Player : MonoBehaviour
     private bool jump;
     private bool crouch;
 
-    private Vector3 r = Vector3.zero;
-    private Vector3 f = Vector3.zero;
-    private Vector3 u = Vector3.zero;
+    //private Vector3 r = Vector3.zero;
+    //private Vector3 f = Vector3.zero;
+    //private Vector3 u = Vector3.zero;
 
     private RaycastHit ray;
 
@@ -70,9 +70,9 @@ public class Player : MonoBehaviour
         maxSpeed = speed * 1.5f;
 
         // relative directions
-        r = Vector3.Project(rb.velocity, transform.right);
-        f = Vector3.Project(rb.velocity, transform.forward);
-        u = Vector3.Project(rb.velocity, transform.up);
+        //r = Vector3.Project(rb.velocity, transform.right);
+        //f = Vector3.Project(rb.velocity, transform.forward);
+        //u = Vector3.Project(rb.velocity, transform.up);
 
         // enable/disable crosshair
         if (Input.GetKey(KeyCode.Mouse1)) HideObject(true, crossHair, 4f);
@@ -105,9 +105,10 @@ public class Player : MonoBehaviour
         // stamina
         stats.RemoveStamina(rb.velocity.magnitude > walkForce * 1.5f ? rb.velocity.magnitude * 1.25f : rb.velocity.magnitude * 0.25f);
         if (rb.velocity.magnitude <= 0.001f) stats.RecoverStamina();
-
+        // set no stamina move speed
         if (stats.GetStamina() <= minStamina) speed = noStaminaForce;
 
+        // change FOV based on move speed
         if (speed == runForce && (horzin != 0 || vertin != 0)) cam.ChangeFOV(runForce, sprintFOV);
         else cam.ChangeFOV(runForce, defaultFOV);
 
@@ -140,21 +141,23 @@ public class Player : MonoBehaviour
         else if (CheckGround()) rb.AddForce(((Mathf.Abs(vertin) > 0.001f ? vertin : 0f) * 10f * speed * GetMoveDir() + (Mathf.Abs(horzin) > 0.001f ? horzin : 0f) * 10f * (speed != runForce ? speed : walkForce) * GetMoveDirRight()));
         else rb.AddForce(0.35f * (speed * vertin * cam.transform.forward + horzin * (speed != runForce ? speed : walkForce) * cam.transform.right));
 
+        // jumping
         if (CheckGround() && !inWater && jump) Jump();
 
         // adds upward force if in water and not moving down
-        if (inWater && Vector3.Dot(Vector3.one, cam.transform.forward) < 3f) rb.AddForce(floatForce * transform.up); 
+        //if (inWater && Vector3.Dot(Vector3.one, cam.transform.forward) < 3f) rb.AddForce(floatForce * transform.up); 
 
         // Slow movement in water
-        if (horzin == 0 && r.magnitude > 0.1f && inWater) rb.velocity += slowForce * Time.deltaTime * -r.normalized;
-        if (vertin == 0 && f.magnitude > 0.1f && inWater) rb.velocity += slowForce * Time.deltaTime * -f.normalized;
-        if (vertin == 0 && horzin == 0 && u.magnitude > 0.1f && inWater) rb.velocity += slowForce * Time.deltaTime * -u.normalized;
+        //if (horzin == 0 && r.magnitude > 0.1f && inWater) rb.velocity += slowForce * Time.deltaTime * -r.normalized;
+        //if (vertin == 0 && f.magnitude > 0.1f && inWater) rb.velocity += slowForce * Time.deltaTime * -f.normalized;
+        //if (vertin == 0 && horzin == 0 && u.magnitude > 0.1f && inWater) rb.velocity += slowForce * Time.deltaTime * -u.normalized;
 
         // stop the player if moving slow enough
         if (rb.velocity.magnitude <= 0.1f) rb.velocity = Vector3.zero;
     }
     private void Jump()
     {
+        // adds an upwards force
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
     private void Crouch(bool state)
@@ -172,21 +175,20 @@ public class Player : MonoBehaviour
         else temp = new Vector3(1f, 1f, 1f);
         obj.transform.localScale = Vector3.Lerp(obj.transform.localScale, temp, Time.deltaTime * rate);
     }
-
-    // gets the move direction of the player based on the slope of the surface they are standing on
     private Vector3 GetMoveDir()
     {
+        // gets the move direction of the player based on the slope of the surface they are standing on
         if (CheckGround()) return Vector3.ProjectOnPlane(transform.forward, ray.normal);
         else return transform.forward;
     }
-    // gets the right direction vector based on the move direction
     private Vector3 GetMoveDirRight()
     {
+        // gets the right direction vector based on the move direction
         return -Vector3.Cross(GetMoveDir(), ray.normal).normalized;
     }
-    // checks the ground collision
     private bool CheckGround()
     {
+         // checks the ground collision
         bool temp = false;
         for (int i=0;i<GChecks.Length;i++)
         {
@@ -202,11 +204,11 @@ public class Player : MonoBehaviour
         }
         return temp;
     }
-    // Kills player
     public void Die()
     {
+        // Kills player
         Time.timeScale = 0f;
-        FindObjectOfType<Scenes>().LoadDeathScene();
+        FindObjectOfType<MainGame>().LoadDeathScene();
     }
     private void OnTriggerStay(Collider other)
     {

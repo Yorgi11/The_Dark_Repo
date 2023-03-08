@@ -12,7 +12,7 @@ public class MuzzleGlow : MonoBehaviour
     private Color currentColor;
     private float currIntensity = 0f;
     private float goalIntensity = 0f;
-    private float rate = 4f;
+    private readonly float rate = 4f;
     private int numshots = 0;
     private void Awake()
     {
