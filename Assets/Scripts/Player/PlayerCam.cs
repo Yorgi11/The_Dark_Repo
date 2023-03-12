@@ -14,8 +14,13 @@ public class PlayerCam : MonoBehaviour
     private float t;
     private Vector3 camrec =Vector3.zero;
     private Camera thisCamera;
+
+    // MainHub
+    private MainHub hub;
     void Start()
     {
+        hub = FindObjectOfType<MainHub>();
+
         thisCamera = GetComponent<Camera>();
         //if (Screen.currentResolution > )
         char[] screen = Screen.currentResolution.ToString().ToCharArray();
@@ -27,32 +32,34 @@ public class PlayerCam : MonoBehaviour
         if (int.Parse(width) != 1920) resFactor = int.Parse(width) / 1920;
         else resFactor = 1f;
         player = FindObjectOfType<Player>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        hub.DisableMouse = false;
     }
     void Update()
     {
-        mousex = Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * sensitivity * resFactor;
-        mousey = Input.GetAxisRaw("Mouse Y") * Time.fixedDeltaTime * sensitivity * resFactor;
-
-        // for use with camera recoil
-        yRot += mousex + camrec.y;
-        xRot -= mousey + camrec.x;
-
-        if (xRot < -89.5f)
+        if (!hub.DisableMouse)
         {
-            xRot = -89.5f;
-        }
-        else if (xRot > 89.5f)
-        {
-            xRot = 89.5f;
-        }
+            mousex = Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * sensitivity * resFactor;
+            mousey = Input.GetAxisRaw("Mouse Y") * Time.fixedDeltaTime * sensitivity * resFactor;
 
-        transform.rotation = Quaternion.Euler(xRot, yRot, 0f);
-        player.transform.rotation = Quaternion.Euler(0f, yRot, 0f);
+            // for use with camera recoil
+            yRot += mousex + camrec.y;
+            xRot -= mousey + camrec.x;
 
-        // for crouching
-        transform.localPosition = new Vector3(0f, 1.7f * player.transform.localScale.y, 0f);
+            if (xRot < -89.5f)
+            {
+                xRot = -89.5f;
+            }
+            else if (xRot > 89.5f)
+            {
+                xRot = 89.5f;
+            }
+
+            transform.rotation = Quaternion.Euler(xRot, yRot, 0f);
+            player.transform.rotation = Quaternion.Euler(0f, yRot, 0f);
+
+            // for crouching
+            transform.localPosition = new Vector3(0f, 1.7f * player.transform.localScale.y, 0f);
+        }
     }
     public void CamRecoil(Vector3 rot)
     {

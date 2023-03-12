@@ -52,8 +52,10 @@ public class Player : MonoBehaviour
 
     private Gun currentGun;
     private StatsSystem stats;
+    private MainHub hub;
     void Start()
     {
+        hub = FindObjectOfType<MainHub>();
         cam = FindObjectOfType<PlayerCam>();
         rb = GetComponent<Rigidbody>();
         stats = GetComponent<StatsSystem>();
@@ -66,70 +68,73 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-        // set maxspeed
-        maxSpeed = speed * 1.5f;
-
-        // relative directions
-        //r = Vector3.Project(rb.velocity, transform.right);
-        //f = Vector3.Project(rb.velocity, transform.forward);
-        //u = Vector3.Project(rb.velocity, transform.up);
-
-        // enable/disable crosshair
-        if (Input.GetKey(KeyCode.Mouse1)) HideObject(true, crossHair, 4f);
-        else HideObject(false, crossHair, 4f);
-
-        // weapon swap
-        if (Input.GetAxisRaw("Mouse ScrollWheel") != 0)
+        if (!hub.DisableMouse)
         {
-            currentGun.gameObject.SetActive(false);
-            //currentGun.SwapWeapOff();
-            if (Input.GetAxisRaw("Mouse ScrollWheel") > 0) gunIndex++;
-            if (Input.GetAxisRaw("Mouse ScrollWheel") < 0) gunIndex--;
-            if (gunIndex >= guns.Length) gunIndex = 0;
-            if (gunIndex < 0) gunIndex = guns.Length - 1;
-            currentGun = guns[gunIndex];
-            currentGun.gameObject.SetActive(true);
-            //currentGun.SwapWeapOn();
-            //Debug.Log(gunIndex);
+            // set maxspeed
+            maxSpeed = speed * 1.5f;
+
+            // relative directions
+            //r = Vector3.Project(rb.velocity, transform.right);
+            //f = Vector3.Project(rb.velocity, transform.forward);
+            //u = Vector3.Project(rb.velocity, transform.up);
+
+            // enable/disable crosshair
+            if (Input.GetKey(KeyCode.Mouse1)) HideObject(true, crossHair, 4f);
+            else HideObject(false, crossHair, 4f);
+
+            // weapon swap
+            if (Input.GetAxisRaw("Mouse ScrollWheel") != 0)
+            {
+                currentGun.gameObject.SetActive(false);
+                //currentGun.SwapWeapOff();
+                if (Input.GetAxisRaw("Mouse ScrollWheel") > 0) gunIndex++;
+                if (Input.GetAxisRaw("Mouse ScrollWheel") < 0) gunIndex--;
+                if (gunIndex >= guns.Length) gunIndex = 0;
+                if (gunIndex < 0) gunIndex = guns.Length - 1;
+                currentGun = guns[gunIndex];
+                currentGun.gameObject.SetActive(true);
+                //currentGun.SwapWeapOn();
+                //Debug.Log(gunIndex);
+            }
+
+            // set gravity and max speed based on inWater
+            rb.useGravity = !inWater;
+            if (rb.velocity.magnitude > (inWater ? maxSwimSpeed : maxSpeed)) rb.velocity = rb.velocity.normalized * (inWater ? maxSwimSpeed : maxSpeed);
+
+            // set speed to walk, run or crouch
+            if (Input.GetKey(KeyCode.LeftShift) && !crouch) speed = runForce;
+            else if (crouch) speed = crouchForce;
+            else speed = walkForce;
+
+            // stamina
+            stats.RemoveStamina(rb.velocity.magnitude > walkForce * 1.5f ? rb.velocity.magnitude * 1.25f : rb.velocity.magnitude * 0.25f);
+            if (rb.velocity.magnitude <= 0.001f) stats.RecoverStamina();
+            // set no stamina move speed
+            if (stats.GetStamina() <= minStamina) speed = noStaminaForce;
+
+            // change FOV based on move speed
+            if (speed == runForce && (horzin != 0 || vertin != 0)) cam.ChangeFOV(runForce, sprintFOV);
+            else cam.ChangeFOV(runForce, defaultFOV);
+
+            // jump if not in water
+            if (Input.GetKey(KeyCode.Space) && !inWater) jump = true;
+            else jump = false;
+
+            // crouch if not jumping
+            if (Input.GetKey(KeyCode.LeftControl) && !jump) Crouch(true);
+            else Crouch(false);
+
+            // movement input
+            horzin = Input.GetAxisRaw("Horizontal");
+            vertin = Input.GetAxisRaw("Vertical");
+
+            // UI
+            if (HpBar != null) HpBar.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, stats.GetHp() - 96, 0);
+            if (StaminaBar != null) StaminaBar.GetComponent<RectTransform>().anchoredPosition = new Vector3(stats.GetStamina() - 96, 0, 0);
+            //if (AmmoImage != null) AmmoImageHandler();
+            //if (ReloadText != null && GetComponent<Attack>().GetIsReloading()) ReloadText.SetActive(true);
+            //else if (ReloadText != null) ReloadText.SetActive(false);
         }
-
-        // set gravity and max speed based on inWater
-        rb.useGravity = !inWater;
-        if (rb.velocity.magnitude > (inWater ? maxSwimSpeed : maxSpeed)) rb.velocity = rb.velocity.normalized * (inWater ? maxSwimSpeed : maxSpeed);
-
-        // set speed to walk, run or crouch
-        if (Input.GetKey(KeyCode.LeftShift) && !crouch) speed = runForce;
-        else if (crouch) speed = crouchForce;
-        else speed = walkForce;
-
-        // stamina
-        stats.RemoveStamina(rb.velocity.magnitude > walkForce * 1.5f ? rb.velocity.magnitude * 1.25f : rb.velocity.magnitude * 0.25f);
-        if (rb.velocity.magnitude <= 0.001f) stats.RecoverStamina();
-        // set no stamina move speed
-        if (stats.GetStamina() <= minStamina) speed = noStaminaForce;
-
-        // change FOV based on move speed
-        if (speed == runForce && (horzin != 0 || vertin != 0)) cam.ChangeFOV(runForce, sprintFOV);
-        else cam.ChangeFOV(runForce, defaultFOV);
-
-        // jump if not in water
-        if (Input.GetKey(KeyCode.Space) && !inWater) jump = true;
-        else jump = false;
-
-        // crouch if not jumping
-        if (Input.GetKey(KeyCode.LeftControl) && !jump) Crouch(true);
-        else Crouch(false);
-
-        // movement input
-        horzin = Input.GetAxisRaw("Horizontal");
-        vertin = Input.GetAxisRaw("Vertical");
-
-        // UI
-        if (HpBar != null) HpBar.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, stats.GetHp() - 96, 0);
-        if (StaminaBar != null) StaminaBar.GetComponent<RectTransform>().anchoredPosition = new Vector3(stats.GetStamina() - 96, 0, 0);
-        //if (AmmoImage != null) AmmoImageHandler();
-        //if (ReloadText != null && GetComponent<Attack>().GetIsReloading()) ReloadText.SetActive(true);
-        //else if (ReloadText != null) ReloadText.SetActive(false);
     }
     private void FixedUpdate()
     {

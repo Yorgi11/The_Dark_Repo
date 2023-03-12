@@ -74,8 +74,13 @@ public class Gun : MonoBehaviour
 
     private GunAnimation ani;
     private MuzzleGlow mg;
+
+    // MainHub
+    private MainHub hub;
     void Awake()
     {
+        hub = FindObjectOfType<MainHub>();
+
         ani = GetComponent<GunAnimation>();
         mg = GetComponent<MuzzleGlow>();
         FireRate = 1 / FireRate;
@@ -85,24 +90,27 @@ public class Gun : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse0) && canShoot && auto && currentAmmo > 0) Shoot();
-        else if (Input.GetKeyDown(KeyCode.Mouse0) && canShoot && !auto && currentAmmo > 0) Shoot();
-        else if (!Input.GetKey(KeyCode.Mouse0))
+        if (!hub.DisableMouse)
         {
-            currentShots = 0;
-            mg.SetNumShots(currentShots);
+            if (Input.GetKey(KeyCode.Mouse0) && canShoot && auto && currentAmmo > 0) Shoot();
+            else if (Input.GetKeyDown(KeyCode.Mouse0) && canShoot && !auto && currentAmmo > 0) Shoot();
+            else if (!Input.GetKey(KeyCode.Mouse0))
+            {
+                currentShots = 0;
+                mg.SetNumShots(currentShots);
+            }
+            ani.PointAtSway(snappiness);
+            ani.IdleSway(idlex, idley, idleSpeed, concentartion);
+            ani.LookSway(swaySmooth, swayMulti);
+            ani.Recoil(0f, 0f, 0f, 0f, snappiness, camFactor);
+            if (Input.GetKey(KeyCode.Mouse1)) ani.ADS(aimPos, aimRot, adsSpeed);
+            else ani.ADS(hipPos, hipRot, adsSpeed);
+
+            if (Input.GetKeyDown(KeyCode.R) && !isReloading) StartCoroutine(Reload());
+            if (currentAmmo <= 0 && Input.GetKey(KeyCode.Mouse0) && !isReloading) StartCoroutine(Reload());
+
+            if (AmmoText != null) AmmoText.text = ammo;
         }
-        ani.PointAtSway(snappiness);
-        ani.IdleSway(idlex, idley, idleSpeed, concentartion);
-        ani.LookSway(swaySmooth, swayMulti);
-        ani.Recoil(0f, 0f, 0f, 0f, snappiness, camFactor);
-        if (Input.GetKey(KeyCode.Mouse1)) ani.ADS(aimPos, aimRot, adsSpeed);
-        else ani.ADS(hipPos, hipRot, adsSpeed);
-
-        if (Input.GetKeyDown(KeyCode.R) && !isReloading) StartCoroutine(Reload());
-        if (currentAmmo <= 0 && Input.GetKey(KeyCode.Mouse0) && !isReloading) StartCoroutine(Reload());
-
-        if (AmmoText != null) AmmoText.text = ammo;
     }
 
     private void Shoot()

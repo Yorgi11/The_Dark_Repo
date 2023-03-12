@@ -61,15 +61,15 @@ public class Enemy : MonoBehaviour
         dir = (Target - transform.position).normalized;
         distToTarget = Vector3.Distance(transform.position, Target);
         transform.forward = dir;
-        //SeekHandler();
+        SeekHandler();
     }
     private void FixedUpdate()
     {
         // move the enemy to the targets position
         avoidForce = Vector3.zero;
         ObstaclesCheck();
-        rb.AddForce(avoidForce * speed * 10f);
-        rb.AddForce(10f * speed * dir);
+        rb.AddForce(7f * speed * avoidForce);
+        if (distToTarget <= S1Range) rb.AddForce(10f * speed * dir);
     }
     private void SeekHandler()
     {
@@ -97,7 +97,7 @@ public class Enemy : MonoBehaviour
         {
             if (Physics.Raycast(transform.position, obstacleCheckDirs[i], out obstRay, obstDist))
             {
-                avoidForce += -obstacleCheckDirs[i] * Vector3.Distance(transform.position, ray.collider.transform.position);
+                avoidForce += -obstacleCheckDirs[i] * (1/Vector3.Distance(transform.position, obstRay.collider.transform.position));
             }
         }
     }
