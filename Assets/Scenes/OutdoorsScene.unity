@@ -8562,6 +8562,7 @@ GameObject:
   - component: {fileID: 303737465}
   - component: {fileID: 303737466}
   - component: {fileID: 303737464}
+  - component: {fileID: 303737467}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -8709,6 +8710,21 @@ MonoBehaviour:
   staminaLossAmount: 5
   healDelay: 1
   recoverDelay: 0
+--- !u!114 &303737467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303737456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9385bb92ad48ac469d828e00aaf5146, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxCigs: 10
+  maxChange: 10
+  ani: []
 --- !u!4 &304373355 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5b76a13892c94e54382eb4507b986b6f, type: 3}

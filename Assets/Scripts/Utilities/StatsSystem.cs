@@ -74,6 +74,12 @@ public class StatsSystem : MonoBehaviour
         else currentHp += healAmount * Time.deltaTime;
     }
 
+    public void ChangeMaxHealth(float newHp)
+    {
+        maxHp -= newHp;
+        currentHp = maxHp;
+    }
+
     IEnumerator DelayHealing(float time)
     {
         yield return new WaitForSeconds(time);
