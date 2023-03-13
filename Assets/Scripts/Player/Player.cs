@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     private PlayerCam cam;
 
     private Rigidbody rb;
-
+    public Collider walkSound;
     private Gun currentGun;
     private StatsSystem stats;
     private MainHub hub;
@@ -121,8 +121,16 @@ public class Player : MonoBehaviour
             else jump = false;
 
             // crouch if not jumping
-            if (Input.GetKey(KeyCode.LeftControl) && !jump) Crouch(true);
-            else Crouch(false);
+            if (Input.GetKey(KeyCode.LeftControl) && !jump)
+            {
+                Crouch(true);
+                walkSound.enabled = false;
+            }
+            else
+            {
+                Crouch(false);
+                walkSound.enabled = true;
+            }
 
             // movement input
             horzin = Input.GetAxisRaw("Horizontal");

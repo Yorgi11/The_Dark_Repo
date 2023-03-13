@@ -2751,7 +2751,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 303737463}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &109478514
 CapsuleCollider:
@@ -8597,6 +8597,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 346074132}
   - {fileID: 109478513}
   - {fileID: 1903719493}
   m_Father: {fileID: 1529489528}
@@ -8686,6 +8687,7 @@ MonoBehaviour:
   ReloadText: {fileID: 0}
   hitbox: {fileID: 0}
   crossHair: {fileID: 1810012557}
+  walkSound: {fileID: 346074133}
 --- !u!114 &303737466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9650,6 +9652,51 @@ Transform:
   m_Father: {fileID: 2294730928006378047}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &346074131
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 346074132}
+  - component: {fileID: 346074133}
+  m_Layer: 7
+  m_Name: Trigger
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &346074132
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346074131}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 303737463}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &346074133
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346074131}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 31.469261, y: 2.2272837, z: 15.964172}
+  m_Center: {x: -9.047474, y: 0.11364198, z: 1.0940838}
 --- !u!1 &348623234
 GameObject:
   m_ObjectHideFlags: 0
@@ -52064,7 +52111,7 @@ Transform:
   - {fileID: 2053777966}
   - {fileID: 1708615085}
   m_Father: {fileID: 303737463}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1905625604 stripped
 Transform:
