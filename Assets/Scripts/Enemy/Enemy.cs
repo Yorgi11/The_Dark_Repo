@@ -36,9 +36,10 @@ public class Enemy : MonoBehaviour
     private Vector3 avoidForce;
 
     private Player player;
-
+    private MainHub hub;
     private void Awake()
     {
+        hub = FindObjectOfType<MainHub>();
         player = FindObjectOfType<Player>();
         rb = GetComponent<Rigidbody>();
         speed = walkForce;
@@ -133,6 +134,7 @@ public class Enemy : MonoBehaviour
     }
     private void Die()
     {
+        hub.EnemiesKilled++;
         Destroy(gameObject);
     }
     private void OnCollisionStay(Collision collision)
