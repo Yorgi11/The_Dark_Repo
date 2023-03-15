@@ -14,9 +14,12 @@ public class Puzzle : MonoBehaviour
     {
         if (startingPiece.GetPresses() > 0 && !activatedPieces)
         {
-            for (int i=0;i<puzzlePieces.Length;i++)
+            if (puzzlePieces[0] != null)
             {
-                puzzlePieces[i].SwapActiveFeature();
+                for (int i = 0; i < puzzlePieces.Length; i++)
+                {
+                    puzzlePieces[i].SwapActiveFeature();
+                }
             }
             startingPiece.SwapActiveFeature();
             activatedPieces = true;

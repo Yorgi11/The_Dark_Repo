@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject hitbox;
     [SerializeField] private GameObject crossHair;
 
+    private float stealth = 0f;
+
     private float horzin = 0f, vertin = 0f;
     private float speed;
     private float maxSpeed;
@@ -72,6 +74,8 @@ public class Player : MonoBehaviour
         {
             // set maxspeed
             maxSpeed = speed * 1.5f;
+
+            stealth = transform.localScale.y;
 
             // relative directions
             //r = Vector3.Project(rb.velocity, transform.right);
@@ -143,6 +147,7 @@ public class Player : MonoBehaviour
             //if (ReloadText != null && GetComponent<Attack>().GetIsReloading()) ReloadText.SetActive(true);
             //else if (ReloadText != null) ReloadText.SetActive(false);
         }
+        else HideObject(true, crossHair, 4f);
     }
     private void FixedUpdate()
     {
@@ -231,5 +236,10 @@ public class Player : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == 4) inWater = false;
+    }
+    public float CurrentStealth
+    {
+        get { return stealth; }
+        set { stealth = value; }
     }
 }
