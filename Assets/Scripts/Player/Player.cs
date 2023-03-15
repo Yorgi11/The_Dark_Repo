@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -226,7 +227,8 @@ public class Player : MonoBehaviour
     {
         // Kills player
         Time.timeScale = 0f;
-        FindObjectOfType<MainGame>().LoadDeathScene();
+        SceneManager.LoadScene(2);
+        
     }
     private void OnTriggerStay(Collider other)
     {

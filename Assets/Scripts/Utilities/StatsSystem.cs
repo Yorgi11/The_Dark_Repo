@@ -60,8 +60,13 @@ public class StatsSystem : MonoBehaviour
         if (currentHp - dmg <= 0)
         {
             currentHp = 0;
-            if (GetComponent<Player>() != null) GetComponent<Player>().Die();
-            //else GetComponent<Enemy>().Die();
+            if (GetComponent<Player>() != null)
+            {
+
+                
+                GetComponent<Player>().Die();
+                //else GetComponent<Enemy>().Die();
+            }
         }
         else currentHp -= dmg;
         canHeal = false;
