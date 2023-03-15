@@ -12,6 +12,7 @@ public class Puzzle : MonoBehaviour
     [SerializeField] string[] CorrectInputs;
     [SerializeField] Vector3 StartPos;
     [SerializeField] Vector3 EndPos;
+    [SerializeField] GameObject reward;
 
     private float t = 0f;
 
@@ -50,6 +51,16 @@ public class Puzzle : MonoBehaviour
             objForRewards[2].transform.position = Vector3.Lerp(StartPos, EndPos, t);
             //objForRewards[3].transform.position = Vector3.Lerp(StartPos, EndPos, t);
         }
-        //if (startingPiece.GetInputs() == CorrectInputs) 
+        int temp = 0;
+        for (int i=0;i<startingPiece.GetInputs().Length;i++)
+        {
+            if (startingPiece.GetInputs()[i] == CorrectInputs[i]) temp++;
+            if (temp == CorrectInputs.Length) SpawnReward();
+        }
+    }
+
+    private void SpawnReward()
+    {
+        reward.SetActive(true);
     }
 }
