@@ -141,4 +141,11 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<StatsSystem>() != null) collision.gameObject.GetComponent<StatsSystem>().TakeDamage(25f * Time.deltaTime);
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "Player")
+        {
+            Target = player.transform.position;
+        }
+    }
 }
