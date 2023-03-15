@@ -23,6 +23,9 @@ public class Enemy : MonoBehaviour
     private float speed;
     private float maxSpeed;
 
+    private bool noPlayer = true;
+    private bool targeted = false;
+
     private RaycastHit ray;
     private RaycastHit obstRay;
 
@@ -55,12 +58,30 @@ public class Enemy : MonoBehaviour
         {
             // if the ray hits the player set the target to the players position
             // if not set the target to a random position around the enemy's current position
-            if (ray.collider.GetComponentInParent<Player>() != null) Target = player.transform.position;
-            //else Target = new Vector3(transform.position.x + Random.Range(minRandMove, maxRandMove), transform.position.y, transform.position.z + Random.Range(minRandMove, maxRandMove));
+            if (ray.collider.GetComponentInParent<Player>() != null)
+            {
+                if (player.CurrentStealth > 0.55f || player.GetComponent<Rigidbody>().velocity.magnitude > 2.5f)
+                {
+                    noPlayer = false;
+                    targeted = false;
+                    Target = player.transform.position;
+                }
+            }
+            else noPlayer = true;
         }
+
+        if (noPlayer && !targeted)
+        {
+            Target = new Vector3(transform.position.x + Random.Range(minRandMove, maxRandMove), transform.position.y, transform.position.z + Random.Range(minRandMove, maxRandMove));
+            targeted = true;
+        }
+
         dir = (Target - transform.position).normalized;
         distToTarget = Vector3.Distance(transform.position, Target);
         transform.forward = dir;
+
+        if (distToTarget < 0.25f || rb.velocity.magnitude < 0.25f) targeted = false;
+
         SeekHandler();
     }
     private void FixedUpdate()
@@ -76,15 +97,15 @@ public class Enemy : MonoBehaviour
         // set the speed of the enemy based on how far they are from the player
         if (distToTarget <= S1Range)
         {
-            speed = walkForce;
+            speed = walkForce * player.CurrentStealth;
         }
         else if (distToTarget <= S2Range)
         {
-            speed = walkForce;
+            speed = walkForce * player.CurrentStealth;
         }
         else if (distToTarget <= S3Range)
         {
-            speed = walkForce * 1.5f;
+            speed = walkForce * 1.5f * player.CurrentStealth;
         }
         else if (distToTarget <= S4Range)
         {
@@ -97,7 +118,7 @@ public class Enemy : MonoBehaviour
         {
             if (Physics.Raycast(transform.position, obstacleCheckDirs[i], out obstRay, obstDist))
             {
-                avoidForce += -obstacleCheckDirs[i] * (1/Vector3.Distance(transform.position, obstRay.collider.transform.position));
+                if (obstRay.collider.GetComponent<Player>() == null) avoidForce += -obstacleCheckDirs[i] * (1/Vector3.Distance(transform.position, obstRay.collider.transform.position));
             }
         }
     }
