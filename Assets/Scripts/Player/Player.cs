@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject hitbox;
     [SerializeField] private GameObject crossHair;
 
+    private float stealth = 0f;
+
     private float horzin = 0f, vertin = 0f;
     private float speed;
     private float maxSpeed;
@@ -50,7 +52,7 @@ public class Player : MonoBehaviour
     private PlayerCam cam;
 
     private Rigidbody rb;
-
+    public Collider walkSound;
     private Gun currentGun;
     private StatsSystem stats;
     private MainHub hub;
@@ -73,6 +75,8 @@ public class Player : MonoBehaviour
         {
             // set maxspeed
             maxSpeed = speed * 1.5f;
+
+            stealth = transform.localScale.y;
 
             // relative directions
             //r = Vector3.Project(rb.velocity, transform.right);
@@ -122,8 +126,16 @@ public class Player : MonoBehaviour
             else jump = false;
 
             // crouch if not jumping
-            if (Input.GetKey(KeyCode.LeftControl) && !jump) Crouch(true);
-            else Crouch(false);
+            if (Input.GetKey(KeyCode.LeftControl) && !jump)
+            {
+                Crouch(true);
+                walkSound.enabled = false;
+            }
+            else
+            {
+                Crouch(false);
+                walkSound.enabled = true;
+            }
 
             // movement input
             horzin = Input.GetAxisRaw("Horizontal");
@@ -136,6 +148,7 @@ public class Player : MonoBehaviour
             //if (ReloadText != null && GetComponent<Attack>().GetIsReloading()) ReloadText.SetActive(true);
             //else if (ReloadText != null) ReloadText.SetActive(false);
         }
+        else HideObject(true, crossHair, 4f);
     }
     private void FixedUpdate()
     {
@@ -225,5 +238,10 @@ public class Player : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == 4) inWater = false;
+    }
+    public float CurrentStealth
+    {
+        get { return stealth; }
+        set { stealth = value; }
     }
 }

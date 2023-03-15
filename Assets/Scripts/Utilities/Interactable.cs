@@ -7,22 +7,31 @@ public class Interactable : MonoBehaviour
 {
     [SerializeField] private bool opensMenu;
     [SerializeField] private bool isButton;
+    [SerializeField] private bool doTrans;
+    [SerializeField] private bool doActivate;
     [Header("Menu first == 0,   Button first == 1")]
     [SerializeField] private int menuVbutton = 0;
     [SerializeField] private int pressesToFlip = 1;
     [SerializeField] private GameObject Prompt;
 
     [SerializeField] private GameObject Menu;
-    [SerializeField] private ButtonActivate objToActivate;
+    [SerializeField] private GameObject objToTrans;
+
+    [SerializeField] private Vector3 StartPos;
+    [SerializeField] private Vector3 EndPos;
+    [SerializeField] private float speed;
 
     [SerializeField] private GameObject[] Features;
     [SerializeField] private TMP_InputField[] inputFields;
 
     private string[] inputs;
 
+    private float t = 0f;
+
     private int presses = 0;
 
     private bool canInteract = false;
+    private bool but = false;
 
     // MainHub
     private MainHub hub;
@@ -38,19 +47,33 @@ public class Interactable : MonoBehaviour
             HideObject(false, Prompt, 4f);
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (opensMenu && isButton)
+                if (opensMenu && isButton )
                 {
                     if (menuVbutton == 0 && presses < pressesToFlip) OpenMenu();
-                    else if (menuVbutton == 0 && presses >= pressesToFlip) ButtonPressed();
-                    if (menuVbutton == 1 && presses < pressesToFlip) ButtonPressed();
+                    else if (menuVbutton == 0 && presses >= pressesToFlip) but = true;
+                    if (menuVbutton == 1 && presses < pressesToFlip) but = true;
                     else if (menuVbutton == 1 && presses >= pressesToFlip) OpenMenu();
                 }
                 else if (opensMenu) OpenMenu();
-                else if (isButton) ButtonPressed();
+                else if (isButton) but = true;
                 presses++;
             }
         }
         else HideObject(true, Prompt, 4f);
+
+        if (but && objToTrans != null)
+        {
+            t += Time.deltaTime * speed;
+            objToTrans.transform.position = Vector3.Lerp(StartPos, EndPos, t);
+            if (t > 1f) t = 0f;
+            if (objToTrans.transform.position == EndPos)
+            {
+                but = false;
+                Vector3 temp = StartPos;
+                StartPos = EndPos;
+                EndPos = temp;
+            }
+        }
     }
     private void HideObject(bool state, GameObject obj, float rate)
     {
@@ -63,10 +86,6 @@ public class Interactable : MonoBehaviour
     {
         hub.DisableMouse = true;
         if (Menu != null) Menu.SetActive(true);
-    }
-    private void ButtonPressed()
-    {
-        if (objToActivate != null) objToActivate.Activate();
     }
 
     public void SwapActiveFeature()

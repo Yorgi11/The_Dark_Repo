@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MainHub : MonoBehaviour
 {
+    private int enemiesKilled = 0;
+
     private bool disableMouse = false;
 
     private void Update()
@@ -25,5 +27,10 @@ public class MainHub : MonoBehaviour
     {
         get { return disableMouse; }
         set { disableMouse = value; }
+    }
+    public int EnemiesKilled
+    {
+        get { return enemiesKilled; }
+        set { enemiesKilled = value; }
     }
 }
