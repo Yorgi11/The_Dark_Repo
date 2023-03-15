@@ -12067,7 +12067,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f2700afe62efce243b93a49da0936f72, type: 2}
+  - {fileID: 2100000, guid: 6d50b9577ada1514db42b4c90aef4af7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -20498,7 +20498,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f2700afe62efce243b93a49da0936f72, type: 2}
+  - {fileID: 2100000, guid: 6d50b9577ada1514db42b4c90aef4af7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -42079,7 +42079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7d03a394035ad459fe1c5430ab06ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mat: {fileID: 2100000, guid: f2700afe62efce243b93a49da0936f72, type: 2}
+  mat: {fileID: 2100000, guid: 6d50b9577ada1514db42b4c90aef4af7, type: 2}
   basemat: {fileID: 2100000, guid: ec66a56ae59ecc141bfe0c1f9eda5d59, type: 2}
   muzzle: {fileID: 1481316506}
   baseColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
@@ -43613,7 +43613,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f2700afe62efce243b93a49da0936f72, type: 2}
+  - {fileID: 2100000, guid: 6d50b9577ada1514db42b4c90aef4af7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -66720,7 +66720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7d03a394035ad459fe1c5430ab06ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mat: {fileID: 2100000, guid: f2700afe62efce243b93a49da0936f72, type: 2}
+  mat: {fileID: 2100000, guid: 6d50b9577ada1514db42b4c90aef4af7, type: 2}
   basemat: {fileID: 2100000, guid: ec66a56ae59ecc141bfe0c1f9eda5d59, type: 2}
   muzzle: {fileID: 676994206}
   baseColor: {r: 0.2, g: 0.2, b: 0.2, a: 0}
@@ -71492,7 +71492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7d03a394035ad459fe1c5430ab06ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mat: {fileID: 2100000, guid: f2700afe62efce243b93a49da0936f72, type: 2}
+  mat: {fileID: 2100000, guid: 6d50b9577ada1514db42b4c90aef4af7, type: 2}
   basemat: {fileID: 2100000, guid: ec66a56ae59ecc141bfe0c1f9eda5d59, type: 2}
   muzzle: {fileID: 393849869}
   baseColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
@@ -72016,7 +72016,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6504754920692824816
 Transform:
   m_ObjectHideFlags: 0
