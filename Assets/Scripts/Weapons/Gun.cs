@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Gun : MonoBehaviour
 {
@@ -58,7 +59,7 @@ public class Gun : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject AmmoField;
     [SerializeField] private GameObject bulletImage;
-    [SerializeField] private Text AmmoText;
+    [SerializeField] private TextMeshPro AmmoText;
 
     private GameObject[] bulletImages;
 
