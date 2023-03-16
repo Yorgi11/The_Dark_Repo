@@ -18,6 +18,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float S4Range;
     [SerializeField] private LayerMask DetectLayers;
 
+    private AudioSource audio;
+
     private float distToTarget;
     private float currentHp;
     private float speed;
@@ -42,6 +44,7 @@ public class Enemy : MonoBehaviour
         hub = FindObjectOfType<MainHub>();
         player = FindObjectOfType<Player>();
         rb = GetComponent<Rigidbody>();
+        audio = GetComponent<AudioSource>();
         speed = walkForce;
         maxSpeed = speed * 1.5f;
         if (RunForce < walkForce * 1.5f) RunForce = walkForce * 2f;
@@ -66,6 +69,7 @@ public class Enemy : MonoBehaviour
                     noPlayer = false;
                     targeted = false;
                     Target = player.transform.position;
+                    AudioSource.PlayClipAtPoint(audio.clip, player.transform.position);
                 }
             }
             else noPlayer = true;

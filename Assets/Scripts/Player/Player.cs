@@ -31,6 +31,9 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject hitbox;
     [SerializeField] private GameObject crossHair;
 
+    private AudioSource audio;
+
+
     private float stealth = 0f;
 
     private float horzin = 0f, vertin = 0f;
@@ -42,6 +45,8 @@ public class Player : MonoBehaviour
     private bool inWater;
     private bool jump;
     private bool crouch;
+
+    bool audioNotPlaying = true;
 
     //private Vector3 r = Vector3.zero;
     //private Vector3 f = Vector3.zero;
@@ -62,6 +67,8 @@ public class Player : MonoBehaviour
         cam = FindObjectOfType<PlayerCam>();
         rb = GetComponent<Rigidbody>();
         stats = GetComponent<StatsSystem>();
+        audio = GetComponent<AudioSource>();
+
 
         speed = walkForce;
         maxSpeed = speed * 1.5f;
@@ -71,6 +78,21 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        //Sound stuff
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        {
+            if (audioNotPlaying == true)
+            {
+                audioNotPlaying = false;
+                audio.Play();
+            }
+        }
+        else
+        {
+            audioNotPlaying = true;
+            audio.Stop();
+        }
+
         if (!hub.DisableMouse)
         {
             // set maxspeed

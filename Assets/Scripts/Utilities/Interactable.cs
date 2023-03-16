@@ -24,6 +24,8 @@ public class Interactable : MonoBehaviour
     [SerializeField] private GameObject[] Features;
     [SerializeField] private TMP_InputField[] inputFields;
 
+    private AudioSource audio;
+
     private string[] inputs;
 
     private float t = 0f;
@@ -32,6 +34,7 @@ public class Interactable : MonoBehaviour
 
     private bool canInteract = false;
     private bool but = false;
+    public bool audioPresent;
 
     // MainHub
     private MainHub hub;
@@ -39,6 +42,11 @@ public class Interactable : MonoBehaviour
     {
         inputs = new string[inputFields.Length];
         hub = FindObjectOfType<MainHub>();
+        if (audioPresent == true)
+        {
+            audio = GetComponent<AudioSource>();
+        }
+;
     }
     void Update()
     {
@@ -47,6 +55,11 @@ public class Interactable : MonoBehaviour
             HideObject(false, Prompt, 4f);
             if (Input.GetKeyDown(KeyCode.E))
             {
+                if (audioPresent == true)
+                {
+                    audio.Play();
+                }
+
                 if (opensMenu && isButton )
                 {
                     if (menuVbutton == 0 && presses < pressesToFlip) OpenMenu();

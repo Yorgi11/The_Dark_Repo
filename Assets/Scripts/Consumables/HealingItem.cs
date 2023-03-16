@@ -24,7 +24,7 @@ public class HealingItem : MonoBehaviour
         {
             if (currentCigs != 0)
             {
-                ani[currentCigs].Play();
+                //ani[currentCigs].Play();
                 currentCigs--;
                 stats.ChangeMaxHealth(maxChange);
             }
