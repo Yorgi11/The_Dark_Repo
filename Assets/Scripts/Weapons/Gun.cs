@@ -59,7 +59,7 @@ public class Gun : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject AmmoField;
     [SerializeField] private GameObject bulletImage;
-    [SerializeField] private TextMeshPro AmmoText;
+    [SerializeField] private Text AmmoText;
 
     private GameObject[] bulletImages;
 

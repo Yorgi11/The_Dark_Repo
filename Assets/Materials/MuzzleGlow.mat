@@ -14,7 +14,7 @@ Material:
   - _GLOSSYREFLECTIONS_OFF
   - _SPECULARHIGHLIGHTS_OFF
   m_InvalidKeywords: []
-  m_LightmapFlags: 6
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -79,5 +79,5 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0.056149766, g: 0.041556295, b: 0.03519577, a: 0.19693281}
+    - _EmissionColor: {r: 0.00003581185, g: 0.000035811834, b: 0.000035811758, a: 0}
   m_BuildTextureStacks: []
