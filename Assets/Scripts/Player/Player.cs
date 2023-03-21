@@ -33,7 +33,6 @@ public class Player : MonoBehaviour
 
     private AudioSource audio;
 
-
     private float stealth = 0f;
 
     private float horzin = 0f, vertin = 0f;
@@ -51,6 +50,7 @@ public class Player : MonoBehaviour
     //private Vector3 r = Vector3.zero;
     //private Vector3 f = Vector3.zero;
     //private Vector3 u = Vector3.zero;
+
 
     private RaycastHit ray;
 
@@ -250,8 +250,8 @@ public class Player : MonoBehaviour
         // Kills player
         Time.timeScale = 0f;
         SceneManager.LoadScene(2);
-        
     }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.layer == 4) inWater = true;
@@ -261,6 +261,7 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.layer == 4) inWater = false;
     }
+
     public float CurrentStealth
     {
         get { return stealth; }

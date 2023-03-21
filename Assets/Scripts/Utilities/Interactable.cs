@@ -88,7 +88,7 @@ public class Interactable : MonoBehaviour
             }
         }
     }
-    private void HideObject(bool state, GameObject obj, float rate)
+    public void HideObject(bool state, GameObject obj, float rate)
     {
         Vector3 temp;
         if (state) temp = new Vector3(0f, 0f, 0f);

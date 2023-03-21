@@ -8,6 +8,8 @@ TagManager:
   - Clue
   - Puzzle
   - HitMarker
+  - CheckPoint
+  - Enemy
   layers:
   - Default
   - TransparentFX
