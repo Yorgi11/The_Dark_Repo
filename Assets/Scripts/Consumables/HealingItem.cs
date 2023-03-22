@@ -5,20 +5,29 @@ using UnityEngine.Animations;
 
 public class HealingItem : MonoBehaviour
 {
-    public int maxCigs;
+    //How many cigs per a pack
+    public int cigsPerPack;
+    //How many boxes you have
+    private int cigBoxs;
+    //What cig your on in the pack
     private int currentCigs;
-    public float maxChange;
+    public float maxHealthChange;
     public List<Animation> ani;
     private StatsSystem stats;
     // Start is called before the first frame update
     void Start()
     {
         stats = GetComponent<StatsSystem>();
-        currentCigs = maxCigs;
     }
 
     private void Update()
     {
+        //Uses a new pack
+        if (currentCigs == 0 && cigBoxs != 0)
+        {
+            cigBoxs--;
+            currentCigs = cigsPerPack;
+        }
         //If heal input taken
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -26,9 +35,18 @@ public class HealingItem : MonoBehaviour
             {
                 //ani[currentCigs].Play();
                 currentCigs--;
-                stats.ChangeMaxHealth(maxChange);
+                stats.ChangeMaxHealth(maxHealthChange);
             }
 
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "HealthPickup")
+        {
+            Destroy(collision.gameObject);
+            cigBoxs++;
         }
     }
 }

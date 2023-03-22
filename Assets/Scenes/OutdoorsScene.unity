@@ -10147,8 +10147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9385bb92ad48ac469d828e00aaf5146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCigs: 10
-  maxChange: 10
+  cigsPerPack: 5
+  maxHealthChange: 10
   ani: []
 --- !u!114 &303737468
 MonoBehaviour:
