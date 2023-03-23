@@ -11,6 +11,8 @@ TagManager:
   - CheckPoint
   - Enemy
   - HealthPickup
+  - PistolAmmo
+  - TextChange
   layers:
   - Default
   - TransparentFX
