@@ -10,6 +10,7 @@ Material:
   m_Name: MuzzleGlow
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ValidKeywords:
+  - _EMISSION
   - _GLOSSYREFLECTIONS_OFF
   - _SPECULARHIGHLIGHTS_OFF
   m_InvalidKeywords: []
@@ -78,5 +79,5 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0.04237189, g: 0.036772873, b: 0.034332536, a: 0.17970201}
+    - _EmissionColor: {r: 0.022427678, g: 0.020870093, b: 0.02019128, a: 0.10319265}
   m_BuildTextureStacks: []
