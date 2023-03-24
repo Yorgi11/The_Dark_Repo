@@ -6,31 +6,23 @@ public class ClueScript : MonoBehaviour
 {
     [SerializeField] private GameObject journalScreen;
     public List<GameObject> clueSource;
-    public List<GameObject> puzzleSource;
-    public List<bool> activeSourcePuzzle;
-    public List<bool> activeSource;
-    [SerializeField] private GameObject[] n;
-    [SerializeField] private GameObject[] p;
+    public  List<GameObject> puzzleSource;
+    private List<bool> activeSourcePuzzle;
+    private List<bool> activeSource;
     private string[] names;
     private string[] pnames;
     // Start is called before the first frame update
     void Start()
     {
-        names = new string[n.Length];
-        pnames = new string[n.Length];
-        for (int i=0; i<n.Length; i++)
+        for (int i = 0; i < clueSource.Count; i++)
         {
-            names[i] = n[i].name;
-            pnames[i] = p[i].name;
+            names[i] = clueSource[i].transform.name;
+            activeSource[i] = false;
         }
-        for(int b = 0; activeSource.Count < b; b++)
+        for (int i = 0; i < puzzleSource.Count; i++)
         {
-            activeSource[b] = false;
-        }
-
-        for (int b = 0; activeSourcePuzzle.Count < b; b++)
-        {
-            activeSourcePuzzle[b] = false;
+            pnames[i] = puzzleSource[i].transform.name;
+            activeSourcePuzzle[i] = false;
         }
     }
 

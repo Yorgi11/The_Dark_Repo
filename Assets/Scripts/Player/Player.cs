@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
     private float speed;
     private float maxSpeed;
 
+    public int pistolammopickup;
+
     private int gunIndex = 0;
 
     private bool inWater;
@@ -260,6 +262,15 @@ public class Player : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == 4) inWater = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "PistolAmmo")
+        {
+            Destroy(other.gameObject);
+            currentGun.collectAmmo(pistolammopickup);
+        }
     }
 
     public float CurrentStealth
