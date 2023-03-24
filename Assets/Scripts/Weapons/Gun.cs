@@ -66,7 +66,6 @@ public class Gun : MonoBehaviour
     private string ammo = "";
 
     private int currentAmmo;
-    private int totalAmmo;
     private int shotGroupIndex = 0;
 
     private int currentShots = 0;
@@ -186,21 +185,7 @@ public class Gun : MonoBehaviour
     {
         isReloading = true;
         yield return new WaitForSeconds(reloadDelay);
-        if(totalAmmo == maxAmmo)
-        {
-            currentAmmo = maxAmmo;
-            totalAmmo -= maxAmmo;
-        }
-        else if(totalAmmo != maxAmmo && totalAmmo != 0)
-        {
-            currentAmmo = totalAmmo;
-            totalAmmo -= currentAmmo;
-        }
-        else
-        {
-            currentAmmo = 0;
-            totalAmmo = 0;
-        }
+        currentAmmo = maxAmmo;
         isReloading = false;
         SetAmmo();
     }
@@ -212,10 +197,5 @@ public class Gun : MonoBehaviour
         {
             ammo += "|";
         }
-    }
-
-    public void collectAmmo(int a)
-    {
-        totalAmmo += a;
     }
 }
