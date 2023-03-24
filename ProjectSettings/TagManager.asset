@@ -13,8 +13,6 @@ TagManager:
   - HealthPickup
   - PistolAmmo
   - TextChange
-  - TomAmmo
-  - mgAmmo
   layers:
   - Default
   - TransparentFX

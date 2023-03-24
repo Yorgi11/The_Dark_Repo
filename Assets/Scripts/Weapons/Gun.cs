@@ -63,14 +63,10 @@ public class Gun : MonoBehaviour
 
     private GameObject[] bulletImages;
 
-    private string gunName = "500Mag";
-
     private string ammo = "";
 
     private int currentAmmo;
-    private int totalAmmoP;
-    private int totalAmmoMG;
-    private int totalAmmoTom;
+    private int totalAmmo;
     private int shotGroupIndex = 0;
 
     private int currentShots = 0;
@@ -190,62 +186,20 @@ public class Gun : MonoBehaviour
     {
         isReloading = true;
         yield return new WaitForSeconds(reloadDelay);
-        //Pistol
-        if(gunName == "500Mag")
+        if(totalAmmo == maxAmmo)
         {
-            if (totalAmmoP == maxAmmo)
-            {
-                currentAmmo = maxAmmo;
-                totalAmmoP -= maxAmmo;
-            }
-            else if (totalAmmoP != maxAmmo && totalAmmoP != 0)
-            {
-                currentAmmo = totalAmmoP;
-                totalAmmoP -= currentAmmo;
-            }
-            //else
-            //{
-            //    currentAmmo = 0;
-            //    totalAmmoP = 0;
-            //}
+            currentAmmo = maxAmmo;
+            totalAmmo -= maxAmmo;
         }
-        //MG
-        else if(gunName == "AM Spitfire")
+        else if(totalAmmo != maxAmmo && totalAmmo != 0)
         {
-            if (totalAmmoMG == maxAmmo)
-            {
-                currentAmmo = maxAmmo;
-                totalAmmoMG -= maxAmmo;
-            }
-            else if (totalAmmoMG != maxAmmo && totalAmmoMG != 0)
-            {
-                currentAmmo = totalAmmoMG;
-                totalAmmoMG -= currentAmmo;
-            }
-            //else
-            //{
-            //    currentAmmo = 0;
-            //    totalAmmoMG = 0;
-            //}
+            currentAmmo = totalAmmo;
+            totalAmmo -= currentAmmo;
         }
-        //Tommy gun
-        else if(gunName == "Danuvia 43M")
+        else
         {
-            if (totalAmmoTom == maxAmmo)
-            {
-                currentAmmo = maxAmmo;
-                totalAmmoTom -= maxAmmo;
-            }
-            else if (totalAmmoTom != maxAmmo && totalAmmoTom != 0)
-            {
-                currentAmmo = totalAmmoTom;
-                totalAmmoTom -= currentAmmo;
-            }
-            //else
-            //{
-            //    currentAmmo = 0;
-            //    totalAmmoTom = 0;
-            //}
+            currentAmmo = 0;
+            totalAmmo = 0;
         }
         isReloading = false;
         SetAmmo();
@@ -260,23 +214,8 @@ public class Gun : MonoBehaviour
         }
     }
 
-    public void setGun(GameObject g)
-    {
-        gunName = g.transform.name;
-    }
-
     public void collectAmmo(int a)
     {
-        totalAmmoP += a;
-    }
-
-    public void collectAmmoMG(int a)
-    {
-        totalAmmoMG += a;
-    }
-
-    public void collectAmmoTommy(int a)
-    {
-        totalAmmoTom += a;
+        totalAmmo += a;
     }
 }
