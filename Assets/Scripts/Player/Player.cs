@@ -270,17 +270,20 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(other.gameObject);
+        
         if (other.transform.tag == "PistolAmmo")
         {
+            Destroy(other.gameObject);
             currentGun.collectAmmo(pistolammopickup);
         }
         else if(other.transform.tag == "mgAmmo")
         {
+            Destroy(other.gameObject);
             currentGun.collectAmmoMG(mgAmmo);
         }
         else if (other.transform.tag == "TomAmmo")
         {
+            Destroy(other.gameObject);
             currentGun.collectAmmoTommy(tomAmmo);
         }
 
