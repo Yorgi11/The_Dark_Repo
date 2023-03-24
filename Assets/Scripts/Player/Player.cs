@@ -204,6 +204,7 @@ public class Player : MonoBehaviour
     private void Jump()
     {
         // adds an upwards force
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
     private void Crouch(bool state)
@@ -241,7 +242,7 @@ public class Player : MonoBehaviour
             if (Physics.Raycast(GChecks[i].position, -transform.up, out ray, 1.25f, groundlayers))
             {
                 if (ray.collider.isTrigger) temp = false;
-                else
+                else if (rb.velocity.y <= 0f)
                 {
                     temp = true;
                     break;
