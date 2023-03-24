@@ -40,6 +40,8 @@ public class Player : MonoBehaviour
     private float maxSpeed;
 
     public int pistolammopickup;
+    public int mgAmmo;
+    public int tomAmmo;
 
     private int gunIndex = 0;
 
@@ -121,6 +123,7 @@ public class Player : MonoBehaviour
                 if (gunIndex >= guns.Length) gunIndex = 0;
                 if (gunIndex < 0) gunIndex = guns.Length - 1;
                 currentGun = guns[gunIndex];
+                currentGun.setGun(currentGun.gameObject);
                 currentGun.gameObject.SetActive(true);
                 //currentGun.SwapWeapOn();
                 //Debug.Log(gunIndex);
@@ -266,11 +269,20 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Destroy(other.gameObject);
         if (other.transform.tag == "PistolAmmo")
         {
-            Destroy(other.gameObject);
             currentGun.collectAmmo(pistolammopickup);
         }
+        else if(other.transform.tag == "mgAmmo")
+        {
+            currentGun.collectAmmoMG(mgAmmo);
+        }
+        else if (other.transform.tag == "TomAmmo")
+        {
+            currentGun.collectAmmoTommy(tomAmmo);
+        }
+
     }
 
     public float CurrentStealth
